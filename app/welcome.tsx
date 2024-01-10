@@ -19,16 +19,14 @@ export default function Completion() {
       <h1 className="rounded-lg text-6xl font-bold w-1/2 text-white md:text-xl pb-4">
         Welcome to Protugual
       </h1>
-          <button
-            disabled={!isLoading}
-            type="button"
-            onClick={stop}
-            className="inline-block bg-gray-100 hover:bg-gray-300 text-gray-700 font-semibold hover:text-white py-2 px-4 border border-gray-300 hover:border-transparent rounded m-2 disabled:opacity-50"
-          >
-            Stop
-          </button>
-        </form>
-      </div>
+      <button
+        disabled={!isLoading}
+        type="button"
+        onClick={stop}
+        className="inline-block bg-gray-100 hover:bg-gray-300 text-gray-700 font-semibold hover:text-white py-2 px-4 border border-gray-300 hover:border-transparent rounded m-2 disabled:opacity-50"
+      >
+        Stop
+      </button>
     </div>
   );
 }
