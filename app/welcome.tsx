@@ -19,33 +19,6 @@ export default function Completion() {
       <h1 className="rounded-lg text-6xl font-bold w-1/2 text-white md:text-xl pb-4">
         Welcome to Protugual
       </h1>
-      <div className="bg-white mx-auto w-1/2 h-[700px] max-w-md py-24 flex flex-col">
-        <h4 className="text-xl font-bold text-gray-900 md:text-xl pb-4">
-         Chat Section
-        </h4>
-        {error && (
-          <div className="fixed top-0 left-0 w-full p-4 text-center bg-red-500 text-white">
-            {error.message}
-          </div>
-        )}
-        <output>{completion}</output>
-        <form
-          onSubmit={handleSubmit}
-          className="fixed w-full max-w-xl bottom-0 mb-8 items-stretch flex"
-        >
-          <input
-            className="border border-gray-300 rounded m-2 shadow-xl p-2 flex-grow"
-            value={input}
-            placeholder="Say something..."
-            onChange={handleInputChange}
-          />
-          <button
-            disabled={isLoading}
-            type="submit"
-            className="inline-block bg-gray-100 hover:bg-gray-300 text-gray-700 font-semibold hover:text-white py-2 px-4 border border-gray-300 hover:border-transparent rounded m-2 disabled:opacity-50"
-          >
-            Send
-          </button>
           <button
             disabled={!isLoading}
             type="button"
