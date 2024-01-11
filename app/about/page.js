@@ -1,8 +1,11 @@
 import { getServerSession } from "next-auth";
 
 export default async function About() {
-  const user = await getServerSession();
-  console.log(user);
+  try {
+    const user = await getServerSession();
+  } catch (e) {
+    console.log(e);
+  }
   return (
     <main>
       <h2>About</h2>
