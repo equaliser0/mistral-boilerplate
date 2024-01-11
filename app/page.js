@@ -32,7 +32,7 @@ export default function Home() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        prompt: e.target.value,
+        prompt: newMessage,
       }),
     });
     let prediction = await response.json();
@@ -41,7 +41,7 @@ export default function Home() {
       return;
     }
     setPrediction(prediction);
-
+    console.log(prediction);
     while (
       prediction.status !== "succeeded" &&
       prediction.status !== "failed"
