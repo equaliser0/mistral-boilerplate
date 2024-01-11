@@ -1,6 +1,10 @@
-export default async function handler(req, res) {
+import { useRouter } from 'next/router'
+
+export async function POST({ params }) {
+  const router = useRouter()
+  console.log('DYNAMIC ROUTE' params.id);
   const response = await fetch(
-    "https://api.replicate.com/v1/predictions/" + req.query.id,
+    "https://api.replicate.com/v1/predictions/" + params.id,
     {
       headers: {
         Authorization: `Token ${process.env.REPLICATE_API_TOKEN}`,
@@ -10,11 +14,12 @@ export default async function handler(req, res) {
   );
   if (response.status !== 200) {
     let error = await response.json();
-    res.statusCode = 500;
-    res.end(JSON.stringify({ detail: error.detail }));
-    return;
+    // res.statusCode = 500;
+    // res.end(JSON.stringify({ detail: error.detail }));
+    return NextResponse.json({ detail: error.detail });
   }
 
   const prediction = await response.json();
-  res.end(JSON.stringify(prediction));
+  // res.end(JSON.stringify(prediction));
+  return NextResponse.json(prediction);
 }
