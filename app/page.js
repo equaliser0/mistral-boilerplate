@@ -4,7 +4,7 @@ import Replicate from "replicate";
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-export default async function Home() {
+export default function Home() {
   const [prediction, setPrediction] = useState(null);
   const [error, setError] = useState(null);
 
@@ -12,8 +12,8 @@ export default async function Home() {
     return "test";
   };
 
-  // const [messages, setMessages] = useState([]);
-  // const [newMessage, setNewMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
 
   const handleSendMessage = () => {
     if (newMessage.trim() !== "") {
@@ -60,7 +60,7 @@ export default async function Home() {
         setError(prediction.detail);
         return;
       }
-      console.log({prediction})
+      console.log({ prediction });
       setPrediction(prediction);
     }
   };
