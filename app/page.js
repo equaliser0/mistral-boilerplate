@@ -1,23 +1,32 @@
 "use client";
 import React, { useState } from "react";
-import { useChat } from 'ai/react';
+// import { useChat } from 'ai/react';
 
-const dummyResponseComplettion = () => {
-  return 'test'
-}
+export default function Home() {
+  const dummyResponseComplettion = () => {
+    return "test";
+  };
 
-export default async function Home() {
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
+  // const { messages, input, handleInputChange, handleSubmit } = useChat();
 
-  // const [messages, setMessages] = useState([]);
-  // const [newMessage, setNewMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
 
   const handleSendMessage = () => {
     if (newMessage.trim() !== "") {
-      setMessages([...messages, { text: newMessage, user: "You" }]);
+      setMessages((prevState) => {
+        return [...prevState, { text: newMessage, user: "You" }];
+      });
       setNewMessage("");
     }
   };
+  const handleSubmit = (e) => {
+    handleSendMessage();
+    setMessages((prevState) => {
+      return [...prevState, { text: "TEST", user: "AI" }];
+    });
+  };
+
   return (
     <div className="bg">
       <div className="welcome-container">
@@ -33,15 +42,25 @@ export default async function Home() {
           <div className="ChatMessages">
             {messages.map((message, index) => (
               <div key={index} className="Message">
-                <strong>{message.user}:</strong> {message.text}
+                <strong style={{ color: message.user == "AI" && "red" }}>
+                  {message.user}:
+                </strong>
+                {message.text}
               </div>
             ))}
+
+            {/* {messages.map((m) => (
+              <div key={m.id} className="Message">
+                {m.role === "user" ? "User: " : "AI: "}
+                {m.content}
+              </div>
+            ))} */}
           </div>
           <div className="ChatInput">
-            <form onSubmit={handleSubmit}>
+            <form>
               <input
                 type="text"
-                value={input}
+                value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
                 placeholder="Type your message..."
               />
@@ -62,10 +81,10 @@ export default async function Home() {
 //   return (
 //     <div className="mx-auto w-full max-w-md py-24 flex flex-col stretch">
 //       {messages.map(m => (
-        // <div key={m.id} className="whitespace-pre-wrap">
-        //   {m.role === 'user' ? 'User: ' : 'AI: '}
-        //   {m.content}
-        // </div>
+// <div key={m.id} className="whitespace-pre-wrap">
+//   {m.role === 'user' ? 'User: ' : 'AI: '}
+//   {m.content}
+// </div>
 //       ))}
 //       <form onSubmit={handleSubmit}>
 //         <input
