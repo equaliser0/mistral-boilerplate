@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 
 export async function POST(req) {
   const body = await req.json()
-  console.log('prediction', body.prompt);
+  console.log(process.env.REPLICATE_API_TOKEN);
   const response = await fetch("https://api.replicate.com/v1/models/mistralai/mistral-7b-instruct-v0.2/predictions", {
     method: "POST",
     headers: {
