@@ -36,6 +36,7 @@ export default function Home() {
       }),
     });
     let prediction = await response.json();
+    console.log(prediction);
     if (response.status !== 201) {
       setError(prediction.detail);
       return;
