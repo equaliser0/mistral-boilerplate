@@ -1,5 +1,5 @@
-export default async function handler(req, res) {
-  const response = await fetch("https://api.replicate.com/v1/predictions", {
+export async function POST(req) {
+  const response = await fetch("https://api.replicate.com/v1/models/mistralai/mistral-7b-instruct-v0.2/predictions", {
     method: "POST",
     headers: {
       Authorization: `Token ${process.env.REPLICATE_API_TOKEN}`,
@@ -8,21 +8,20 @@ export default async function handler(req, res) {
     body: JSON.stringify({
       // Pinned to a specific version of Stable Diffusion
       // See https://replicate.com/stability-ai/sdxl
-      version: "2b017d9b67edd2ee1401238df49d75da53c523f36e363881e057f5dc3ed3c5b2",
+      version: "79052a3adbba8116ebc6697dcba67ad0d58feff23e7aeb2f103fc9aa545f9269",
 
       // This is the text prompt that will be submitted by a form on the frontend
       input: { prompt: req.body.prompt },
     }),
   });
+  console.log(response);
 
   if (response.status !== 201) {
     let error = await response.json();
-    res.statusCode = 500;
-    res.end(JSON.stringify({ detail: error.detail }));
-    return;
+    // res.statusCode = 500;
+    return JSON.stringify({ detail: error.detail });
   }
-
   const prediction = await response.json();
-  res.statusCode = 201;
-  res.end(JSON.stringify(prediction));
+  // res.statusCode = 201;
+  return JSON.stringify(prediction)
 }
