@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import classes from "./signup/Signup.module.css";
+import classes from "./signup/signup.module.css";
 import Link from "next/link";
 import useInput from "../../hooks/use-inputs";
 import { signIn } from "next-auth/react";

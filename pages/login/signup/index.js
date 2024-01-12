@@ -1,5 +1,5 @@
 import { useState } from "react";
-import classes from "./Signup.module.css";
+import classes from "./signup.module.css";
 import Link from "next/link";
 import useInput from "../../../hooks/use-inputs";
 import { toast } from "react-toastify";
