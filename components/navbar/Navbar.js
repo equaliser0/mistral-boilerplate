@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import Link from "next/link";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -6,7 +5,7 @@ import Image from "next/image";
 import Logo from "../../assets/images/speack.png";
 import { signOut } from "next-auth/react";
 
-export default async function Navbar() {
+export default function Navbar() {
   return (
     <>
       <nav
@@ -53,7 +52,7 @@ export default async function Navbar() {
                   About
                 </Link>
               </li>
-
+              <p>hello</p>
               <li className="nav-item">
                 <Link
                   className="nav-link active"
