@@ -21,14 +21,14 @@ export default async function handler(req, res) {
   // });
 
   const input = {
-    prompt: req.body.prompt
+    prompt: req.body.prompt,
   };
 
-  const model = "istralai/mistral-7b-instruct-v0.2:79052a3adbba8116ebc6697dcba67ad0d58feff23e7aeb2f103fc9aa545f9269";
+  const model =
+    "istralai/mistral-7b-instruct-v0.2:79052a3adbba8116ebc6697dcba67ad0d58feff23e7aeb2f103fc9aa545f9269";
   const output = await replicate.run(model, { input });
-  const string = output.join('');
+  const string = output.join("");
 
-  console.log(string);
   // console.log(await replicate.stream("mistralai/mistral-7b-instruct-v0.2", { input }))
 
   // for await (const event of replicate.stream("mistralai/mistral-7b-instruct-v0.2", { input })) {
@@ -42,5 +42,5 @@ export default async function handler(req, res) {
   // }
   //
   // res.statusCode = 201;
-  // res.end(JSON.stringify(prediction));
+  res.end(JSON.stringify(string));
 }

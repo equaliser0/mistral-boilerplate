@@ -5,8 +5,8 @@ import Image from "next/image";
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 export default function Home() {
-  const [prediction, setPrediction] = useState(null);
   const [error, setError] = useState(null);
+  const [sending, setsending] = useState(false);
 
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -22,6 +22,9 @@ export default function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setsending(true);
+    handleSendMessage();
+
     const response = await fetch("/api/predictions", {
       method: "POST",
       headers: {
@@ -32,12 +35,16 @@ export default function Home() {
       }),
     });
     let prediction = await response.json();
-    if (response.status !== 201) {
+    if (response.status !== 200) {
       setError(prediction.detail);
       return;
     }
-    setPrediction(prediction);
 
+    setMessages((prevState) => {
+      return [...prevState, { text: prediction, user: "AI" }];
+    });
+
+    setsending(false);
     while (
       prediction.status !== "succeeded" &&
       prediction.status !== "failed"
@@ -45,12 +52,14 @@ export default function Home() {
       await sleep(1000);
       const response = await fetch("/api/predictions/" + prediction.id);
       prediction = await response.json();
+
       if (response.status !== 200) {
         setError(prediction.detail);
         return;
       }
-      console.log({ prediction });
-      setPrediction(prediction);
+      setMessages((prevState) => {
+        return [...prevState, { text: prediction, user: "AI" }];
+      });
     }
   };
 
@@ -75,13 +84,6 @@ export default function Home() {
                 {message.text}
               </div>
             ))}
-
-            {/* {messages.map((m) => (
-            <div key={m.id} className="Message">
-              {m.role === "user" ? "User: " : "AI: "}
-              {m.content}
-            </div>
-          ))} */}
           </div>
           <div className="ChatInput">
             <form>
@@ -92,7 +94,17 @@ export default function Home() {
                 placeholder="Type your message..."
               />
             </form>
-            <button onClick={handleSubmit}>Send</button>
+            <button
+              disabled={sending}
+              style={{
+                cursor: sending ? "not-allowed" : "pointer",
+                color: sending && "#808080",
+                backgroundColor: sending && "#a0a0a0",
+              }}
+              onClick={handleSubmit}
+            >
+              {sending ? "Sending.." : "Send"}
+            </button>
           </div>
         </div>
       </div>
